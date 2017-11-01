@@ -1,0 +1,56 @@
+%Common pre
+
+function [fire, transition] = COMMON_PRE(transition)
+% function [fire, trans] = COMMON_PRE(trans)
+
+pArrPort = get_place('pArr_Port');
+DockArr = get_place('DockArr');
+s_admin = get_place('s_admin');
+Docked = get_place('Docked');
+d_admin = get_place('d_admin');
+ready_to_leave = get_place('ready_to_leave');
+DockDep = get_place('DockDep');
+finishLoad = get_place('finishLoad');
+finishUnload = get_place('finishUnload');
+Departed = get_place('Departed');
+
+if (strcmpi(transition.name, 'tarr')),
+    fire = lt(pArrPort.tokens, 2);
+    
+elseif (strcmpi(transition.name, 'twait')),
+    fire = lt(DockArr.tokens, 3);
+
+elseif (strcmpi(transition.name, 'DArr1')),
+    fire = lt(Docked.tokens, 3);
+
+elseif (strcmpi(transition.name, 'DArr2')),
+    fire = lt(Docked.tokens, 3);
+
+elseif (strcmpi(transition.name, 'DArr3')),
+    fire = lt(Docked.tokens, 3);
+
+elseif (strcmpi(transition.name, 't_load')),
+    fire = lt(finishLoad.tokens, 3);
+
+elseif (strcmpi(transition.name, 't_unload')),
+    fire = and(lt(finishUnload.tokens, 2),lt(finishLoad.tokens, 3));
+        
+elseif (strcmpi(transition.name, 't_request_to_leave')),
+    fire = lt(ready_to_leave.tokens, 3);
+                
+elseif (strcmpi(transition.name, 't_depart')),
+    fire = lt(DockDep.tokens, 3);
+
+elseif (strcmpi(transition.name, 'Ddep1')),
+    fire = lt(Departed.tokens, 30);
+    
+elseif (strcmpi(transition.name, 'Ddep2')),
+    fire = lt(Departed.tokens, 30);
+    
+elseif (strcmpi(transition.name, 'Ddep3')),
+    fire = lt(Departed.tokens, 30);
+    
+else
+    error([transition.name, ...
+        ' is neither "tarr", "twait", or "DArr1" ?????...']);
+end;
