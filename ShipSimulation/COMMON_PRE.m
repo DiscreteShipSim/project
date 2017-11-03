@@ -14,20 +14,33 @@ finishLoad = get_place('finishLoad');
 finishUnload = get_place('finishUnload');
 Departed = get_place('Departed');
 
+global global_info;
+
 if (strcmpi(transition.name, 'tarr')),
-    fire = lt(pArrPort.tokens, 2);
+    
+    index = mod(global_info.cr_index, 3)+1;
+    global_info.cr_index = global_info.cr_index + 1;
+    transition.new_color = global_info.cr(index);
+    fire = 1;
+    return
     
 elseif (strcmpi(transition.name, 'twait')),
     fire = lt(DockArr.tokens, 3);
 
 elseif (strcmpi(transition.name, 'DArr1')),
-    fire = lt(Docked.tokens, 3);
+    tokID1 = tokenEXColor('DockArr',1,{'A'});
+    %fire = lt(Docked.tokens, 3);
+    fire = (tokID1);
 
 elseif (strcmpi(transition.name, 'DArr2')),
-    fire = lt(Docked.tokens, 3);
+    tokID1 = tokenEXColor('DockArr',1,{'B'});
+    %fire = lt(Docked.tokens, 3);
+    fire = (tokID1);
 
 elseif (strcmpi(transition.name, 'DArr3')),
-    fire = lt(Docked.tokens, 3);
+    tokID1 = tokenEXColor('DockArr',1,{'C'});
+    %fire = lt(Docked.tokens, 3);
+    fire = (tokID1);
 
 elseif (strcmpi(transition.name, 't_load')),
     fire = lt(finishLoad.tokens, 3);
@@ -42,15 +55,19 @@ elseif (strcmpi(transition.name, 't_depart')),
     fire = lt(DockDep.tokens, 3);
 
 elseif (strcmpi(transition.name, 'Ddep1')),
-    fire = lt(Departed.tokens, 30);
-    
+    tokID1 = tokenEXColor('finishLoad',1,{'A'});
+    %fire = lt(Docked.tokens, 3);
+    fire = (tokID1);    
 elseif (strcmpi(transition.name, 'Ddep2')),
-    fire = lt(Departed.tokens, 30);
-    
+    tokID1 = tokenEXColor('finishLoad',1,{'B'});
+    %fire = lt(Docked.tokens, 3);
+    fire = (tokID1);    
 elseif (strcmpi(transition.name, 'Ddep3')),
-    fire = lt(Departed.tokens, 30);
-    
+    tokID1 = tokenEXColor('finishLoad',1,{'C'});
+    %fire = lt(Docked.tokens, 3);
+    fire = (tokID1);    
 else
     error([transition.name, ...
         ' is neither "tarr", "twait", or "DArr1" ?????...']);
 end;
+
