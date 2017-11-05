@@ -33,25 +33,35 @@ elseif (strcmpi(transition.name, 't_DArr1')),
     granted = request('t_DArr1', ... 
         {'small',1});
     priorset('t_DArr1', 0); 
+
+    %tokID1 = tokenEXColor('DockArr',1,{'A'});
+    %fire = lt(Docked.tokens, 3);
+    %fire = and(tokID1, granted);
     fire = granted;
-    
 elseif (strcmpi(transition.name, 't_DArr2')),
     granted = request('t_DArr2', ... 
         {'medium',1});
     priorset('t_DArr2', 0); 
+
+    %tokID1 = tokenEXColor('DockArr',1,{'B'});
+    %fire = lt(Docked.tokens, 3);
+    %fire = and(tokID1, granted);
     fire = granted;
-    
 elseif (strcmpi(transition.name, 't_DArr3')),
     granted = request('t_DArr3', ... 
         {'big',1});
     priorset('t_DArr3', 0); 
+
+    %tokID1 = tokenEXColor('DockArr',1,{'C'});
+    %fire = lt(Docked.tokens, 3);
     fire = granted;
-    
+   % fire = and(tokID1, granted);
+
 elseif (strcmpi(transition.name, 't_load')),
     fire = lt(finishLoad.tokens, 3);
 
 elseif (strcmpi(transition.name, 't_unload')),
-    fire = lt(finishUnload.tokens, 2);
+    fire = and(lt(finishUnload.tokens, 2),lt(finishLoad.tokens, 3));
         
 elseif (strcmpi(transition.name, 't_request_to_leave')),
     fire = lt(ready_to_leave.tokens, 3);
@@ -60,20 +70,24 @@ elseif (strcmpi(transition.name, 't_depart')),
     fire = lt(DockDep.tokens, 3);
 
 elseif (strcmpi(transition.name, 't_Ddep1')),
-
+    %tokID1 = tokenEXColor('finishLoad',1,{'A'});
     fire = lt(Docked.tokens, 3);
     priorset('t_DArr1', 1); 
+    %fire = (tokID1);   
     
 elseif (strcmpi(transition.name, 't_Ddep2')),
+    %tokID1 = tokenEXColor('finishLoad',1,{'B'});
     fire = lt(Docked.tokens, 3);
     priorset('t_DArr2', 1); 
-    
+    %fire = (tokID1);    
 elseif (strcmpi(transition.name, 't_Ddep3')),
+    %tokID1 = tokenEXColor('finishLoad',1,{'C'});
     fire = lt(Docked.tokens, 3);
     priorset('t_DArr3', 1); 
-    
+
+    %fire = (tokID1);    
 else
     error([transition.name, ...
-        ' is neither "t_arr", "t_wait", or "t_DArr1" ?????...']);
+        ' is neither "t_arr", "t_wait", or "t_DArr2" ?????...']);
 end;
 

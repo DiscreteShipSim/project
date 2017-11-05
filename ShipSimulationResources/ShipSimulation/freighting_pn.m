@@ -15,17 +15,17 @@ global_info.STOP_AT = 10;
 
 pns = pnstruct('ship_sim_pdf'); % create petri net structure
 
-dyn.m0 = {'pArr_Port',2};
-dyn.ft = {'tarr',0.05,'allothers',0.1};
-dyn.ip = {'t_load',3,'t_unload',10};
-dyn.re = {'medium',1,inf, 'small',1,inf, 'big',1,inf};
+dyn.m0 = {'p_Arr_Port',0};
+dyn.ft = {'t_arr',0.05,'allothers',0.1};
+dyn.ip = {'t_DArr1',1,'t_DArr2',1, 't_DArr3', 1};
+dyn.re = {'small',1,inf, 'medium',1,inf, 'big',1,inf};
 prnsys(pns, dyn);
 pni = initialdynamics(pns, dyn);
 
 sim = gpensim(pni); % perform simulation runs
 
 prnss(sim); % print the simulation results 
-plotp(sim, {'pArr_Port','Departed'}); % plot the results
+plotp(sim, {'p_Arr_Port','p_Departed'}); % plot the results
 prnschedule(sim);
 %prnfinalcolors(sim);
 %plotp(sim, {'finishLoad','finishUnload'}); % plot the results
