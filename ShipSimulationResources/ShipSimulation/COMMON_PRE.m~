@@ -18,7 +18,7 @@ global global_info;
 
 if (strcmpi(transition.name, 't_arr')),
     
-   % index = mod(global_info.cr_index, 3)+1;
+    %index = mod(global_info.cr_index, 3)+1;
     %global_info.cr_index = global_info.cr_index + 1;
     %transition.new_color = global_info.cr(index);
     %fire = 1;
@@ -32,62 +32,77 @@ elseif (strcmpi(transition.name, 't_wait')),
 elseif (strcmpi(transition.name, 't_DArr1')),
     granted = request('t_DArr1', ... 
         {'small',1});
-    priorset('t_DArr1', 0); 
-
-    %tokID1 = tokenEXColor('DockArr',1,{'A'});
-    %fire = lt(Docked.tokens, 3);
-    %fire = and(tokID1, granted);
+    transition.new_color = global_info.cr(1);
     fire = granted;
+
+    
 elseif (strcmpi(transition.name, 't_DArr2')),
     granted = request('t_DArr2', ... 
         {'medium',1});
-    priorset('t_DArr2', 0); 
-
-    %tokID1 = tokenEXColor('DockArr',1,{'B'});
-    %fire = lt(Docked.tokens, 3);
-    %fire = and(tokID1, granted);
+    transition.new_color = global_info.cr(2);
     fire = granted;
+    
 elseif (strcmpi(transition.name, 't_DArr3')),
     granted = request('t_DArr3', ... 
         {'big',1});
-    priorset('t_DArr3', 0); 
-
-    %tokID1 = tokenEXColor('DockArr',1,{'C'});
-    %fire = lt(Docked.tokens, 3);
+    transition.new_color = global_info.cr(3);
     fire = granted;
-   % fire = and(tokID1, granted);
+    
+elseif (strcmpi(transition.name, 't_load1')),
+    granted = request(transition.name, ... 
+        {'workers',3}); 
+    fire = granted;   
 
-elseif (strcmpi(transition.name, 't_load')),
-    fire = lt(finishLoad.tokens, 3);
+elseif (strcmpi(transition.name, 't_load2')),
+    granted = request(transition.name, ... 
+        {'workers',5});
+    fire = granted;   
 
-elseif (strcmpi(transition.name, 't_unload')),
-    fire = and(lt(finishUnload.tokens, 2),lt(finishLoad.tokens, 3));
-        
+elseif (strcmpi(transition.name, 't_load3')),
+    granted = request(transition.name, ... 
+        {'workers',8});
+    fire = granted;   
+
+elseif (strcmpi(transition.name, 't_unload1')),
+    granted = request(transition.name, ... 
+        {'workers',5});
+    tokID1 = tokenEXColor('p_Docked',1,{'SmallColor'});
+    transition.selected_tokens = tokID1;
+    fire = and(tokID1,granted);
+    
+elseif (strcmpi(transition.name, 't_unload2')),
+    granted = request(transition.name, ... 
+        {'workers',5});
+    tokID1 = tokenEXColor('p_Docked',1,{'MediumColor'});
+    transition.selected_tokens = tokID1;
+    fire = and(tokID1,granted)
+    
+elseif (strcmpi(transition.name, 't_unload3')),
+    granted = request(transition.name, ... 
+        {'workers',8});
+    tokID1 = tokenEXColor('p_Docked',1,{'BigColor'});
+    transition.selected_tokens = tokID1;
+    fire = and(tokID1,granted)
+    
 elseif (strcmpi(transition.name, 't_request_to_leave')),
     fire = lt(ready_to_leave.tokens, 3);
                 
 elseif (strcmpi(transition.name, 't_depart')),
-    fire = lt(DockDep.tokens, 3);
+    fire = lt(Docked.tokens, 3);
 
 elseif (strcmpi(transition.name, 't_Ddep1')),
-    %tokID1 = tokenEXColor('finishLoad',1,{'A'});
-    fire = lt(Docked.tokens, 3);
-    priorset('t_DArr1', 1); 
-    %fire = (tokID1);   
+    fire = lt(DockDep.tokens, 3);
+
     
 elseif (strcmpi(transition.name, 't_Ddep2')),
-    %tokID1 = tokenEXColor('finishLoad',1,{'B'});
     fire = lt(Docked.tokens, 3);
-    priorset('t_DArr2', 1); 
-    %fire = (tokID1);    
+ 
+    
 elseif (strcmpi(transition.name, 't_Ddep3')),
-    %tokID1 = tokenEXColor('finishLoad',1,{'C'});
     fire = lt(Docked.tokens, 3);
-    priorset('t_DArr3', 1); 
 
-    %fire = (tokID1);    
+    
 else
     error([transition.name, ...
-        ' is neither "t_arr", "t_wait", or "t_DArr2" ?????...']);
+        ' is neither "t_arr", "t_wait", or "t_DArr1" ?????...']);
 end;
-
