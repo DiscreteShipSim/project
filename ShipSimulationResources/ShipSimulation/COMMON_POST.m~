@@ -14,7 +14,9 @@ elseif strcmp(transition.name, 't_wait'), % transition.name 't2'
     release('t_arr');
     
 elseif strcmp(transition.name, 't_DArr1'), % transition.name 't2'
+    release('maritime_pilot')
 elseif strcmp(transition.name, 't_DArr2'), % transition.name 't2'
+    release('maritime_pilot')
 
 elseif strcmp(transition.name, 't_DArr3'), % transition.name 't2'
 

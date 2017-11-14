@@ -39,42 +39,42 @@ elseif (strcmpi(transition.name, 't_DArr3')),
     
 elseif (strcmpi(transition.name, 't_load1')),
     granted = request(transition.name, ... 
-        {'workers',3}); 
+        {'workers',3, 'crane', 1, 'containerloader', 1}); 
     tokID1 = tokenEXColor('p_finishUnload',1,{'SmallColor'});
     transition.selected_tokens = tokID1;
     fire = and(tokID1,granted)  
 
 elseif (strcmpi(transition.name, 't_load2')),
     granted = request(transition.name, ... 
-        {'workers',5});
+        {'workers',5, 'crane', 1, 'containerloader', 3}); 
     tokID1 = tokenEXColor('p_finishUnload',1,{'MediumColor'});
     transition.selected_tokens = tokID1;
     fire = and(tokID1,granted)
 
 elseif (strcmpi(transition.name, 't_load3')),
     granted = request(transition.name, ... 
-        {'workers',3});
+        {'workers',6, 'crane', 1, 'containerloader', 3}); 
     tokID1 = tokenEXColor('p_finishUnload',1,{'BigColor'});
     transition.selected_tokens = tokID1;
     fire = and(tokID1,granted)
 
 elseif (strcmpi(transition.name, 't_unload1')),
     granted = request(transition.name, ... 
-        {'workers',5});
+        {'workers',3, 'crane', 1, 'containerloader', 1}); 
     tokID1 = tokenEXColor('p_Docked',1,{'SmallColor'});
     transition.selected_tokens = tokID1;
     fire = and(tokID1,granted);
     
 elseif (strcmpi(transition.name, 't_unload2')),
     granted = request(transition.name, ... 
-        {'workers',5});
+        {'workers',5, 'crane', 1, 'containerloader', 3}); 
     tokID1 = tokenEXColor('p_Docked',1,{'MediumColor'});
     transition.selected_tokens = tokID1;
     fire = and(tokID1,granted)
     
 elseif (strcmpi(transition.name, 't_unload3')),
     granted = request(transition.name, ... 
-        {'workers',1});
+        {'workers',6, 'crane', 1, 'containerloader', 3}); 
     tokID1 = tokenEXColor('p_Docked',1,{'BigColor'});
     transition.selected_tokens = tokID1;
     fire = and(tokID1,granted)
@@ -86,16 +86,22 @@ elseif (strcmpi(transition.name, 't_depart')),
     fire = lt(Docked.tokens, 4);
 
 elseif (strcmpi(transition.name, 't_Ddep1')),
+    granted = request('t_Ddep1', ... 
+        {'maritime_pilot',1});
     tokID1 = tokenEXColor('p_DockDep',1,{'SmallColor'});
     transition.selected_tokens = tokID1;
     fire =tokID1;
     
 elseif (strcmpi(transition.name, 't_Ddep2')),
+    granted = request('t_Ddep2', ... 
+        {'maritime_pilot',1});    
     tokID1 = tokenEXColor('p_DockDep',1,{'MediumColor'});
     transition.selected_tokens = tokID1;
     fire =tokID1; 
     
 elseif (strcmpi(transition.name, 't_Ddep3')),
+    granted = request('t_Ddep3', ... 
+        {'maritime_pilot',1});    
     tokID1 = tokenEXColor('p_DockDep',1,{'BigColor'});
     transition.selected_tokens = tokID1;
     fire =tokID1;
