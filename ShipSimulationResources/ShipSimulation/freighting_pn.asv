@@ -27,17 +27,15 @@ dyn.ip = {'t_DArr1',1,'t_DArr2',1, 't_DArr3', 10, ...
 dyn.re = {'small',1,inf, 'medium',1,inf,'big',1,inf, 'workers',25,inf, 'maritime_pilot', 1, inf ...
     'crane', 3, inf, 'containerloader',6 , inf
  };
-
-
-
+occupancy_matrix = occupancy(sim, {'t_load1','t_load2','t_load3'})
+disp('Occupancy Matrix: ');
+disp(occupancy_matrix)
 prnsys(pns, dyn);
 pni = initialdynamics(pns, dyn);
 
 
 sim = gpensim(pni); % perform simulation runs
-occupancy_matrix = occupancy(sim, {'t_unload1','t_unload2','t_unload3'});
-disp('Occupancy Matrix: ');
-disp(occupancy_matrix);
+
 prnss(sim); % print the simulation results 
 plotp(sim, {'p_DockDep','p_Departed','p_ready_to_leave','p_Docked'}); % plot the results
 prnschedule(sim);
